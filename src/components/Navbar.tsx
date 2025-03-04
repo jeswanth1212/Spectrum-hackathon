@@ -131,6 +131,16 @@ export default function Navbar() {
           right: var(--t);
           height: var(--w);
         }
+
+        @media (max-width: 768px) {
+          .nav-link {
+            padding: 0.75rem 1rem;
+          }
+          
+          .nav-link-text {
+            font-size: 0.875rem;
+          }
+        }
       `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
@@ -184,28 +194,28 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden bg-black/50 backdrop-blur-sm">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleScroll(e, item.href)}
-                className={`nav-link block px-3 py-2 rounded-md text-base font-medium ${
-                  activeSection === item.href.replace('#', '') ? 'text-purple-400' : 'text-gray-300'
-                }`}
-              >
-                <span className="nav-link-text">{item.name}</span>
-                <div className="border-glow border-left"></div>
-                <div className="border-glow border-right"></div>
-                <div className="border-glow border-top"></div>
-                <div className="border-glow border-bottom"></div>
-              </a>
-            ))}
-          </div>
+      <div 
+        className={`md:hidden fixed inset-x-0 top-16 transform ${
+          isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        } transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-lg`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={(e) => handleScroll(e, item.href)}
+              className={`block w-full text-left px-4 py-3 rounded-md text-base font-medium transition-colors duration-200 ${
+                activeSection === item.href.replace('#', '') 
+                  ? 'text-purple-400 bg-purple-900/20' 
+                  : 'text-gray-300 hover:bg-purple-900/10 hover:text-purple-300'
+              }`}
+            >
+              {item.name}
+            </a>
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   );
 } 

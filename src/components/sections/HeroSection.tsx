@@ -149,7 +149,7 @@ export default function HeroSection() {
           alt="Spectrum Hackathon Logo"
           width={420}
           height={420}
-          className="h-auto w-auto max-h-[420px] object-contain"
+          className="h-auto w-auto max-h-[420px] max-w-[90vw] object-contain"
         />
       </div>
       <Canvas
@@ -169,8 +169,8 @@ export default function HeroSection() {
         <Scene />
       </Canvas>
 
-      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-12">
-        <div className="flex gap-6">
+      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-8 md:gap-12 w-full px-4">
+        <div className="flex flex-wrap justify-center gap-2 xs:gap-3 sm:gap-4 md:gap-6">
           <div className="timer-container">
             <div className="a l"></div>
             <div className="a r"></div>
@@ -237,24 +237,78 @@ export default function HeroSection() {
             position: relative;
             cursor: pointer;
             border: none;
-            padding: 0.875rem 2.5rem;
+            padding: 0.75rem 1.5rem;
             background: #111;
             color: #fff;
-            min-width: 200px;
+            min-width: 160px;
+            font-size: 0.875rem;
+            @media (min-width: 640px) {
+              padding: 0.75rem 2rem;
+              min-width: 180px;
+              font-size: 0.9rem;
+            }
+            @media (min-width: 768px) {
+              padding: 0.875rem 2.5rem;
+              min-width: 200px;
+              font-size: 1rem;
+            }
           }
 
           .timer-container {
             position: relative;
             background: #111;
-            padding: 1.5rem 2rem;
-            min-width: 140px;
+            padding: 0.75rem 1rem;
+            min-width: 80px;
             text-align: center;
+            @media (min-width: 480px) {
+              padding: 0.875rem 1.25rem;
+              min-width: 90px;
+            }
+            @media (min-width: 640px) {
+              padding: 1rem 1.5rem;
+              min-width: 100px;
+            }
+            @media (min-width: 768px) {
+              padding: 1.5rem 2rem;
+              min-width: 140px;
+            }
           }
 
           .timer-content {
             position: relative;
             z-index: 1;
             color: white;
+          }
+
+          .timer-content .text-5xl {
+            font-size: 1.5rem;
+            line-height: 1.2;
+            @media (min-width: 480px) {
+              font-size: 1.75rem;
+            }
+            @media (min-width: 640px) {
+              font-size: 2rem;
+            }
+            @media (min-width: 768px) {
+              font-size: 3rem;
+            }
+          }
+
+          .timer-content .text-sm {
+            font-size: 0.625rem;
+            margin-top: 0.25rem;
+            @media (min-width: 480px) {
+              font-size: 0.675rem;
+              margin-top: 0.375rem;
+            }
+            @media (min-width: 640px) {
+              font-size: 0.75rem;
+              margin-top: 0.5rem;
+            }
+            @media (min-width: 768px) {
+              font-size: 0.875rem;
+              margin-top: 0.5rem;
+            }
           }
 
           .text {

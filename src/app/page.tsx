@@ -12,18 +12,20 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-black min-h-screen">
+    <main className="bg-black min-h-screen overflow-x-hidden">
       <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <TracksSection />
-      <TimelineSection />
-      <PrizesSection />
-      <SponsorsSection />
-      <OrganisersSection />
-      <FAQsSection />
-      <ContactSection />
-      <Footer />
+      <div className="space-y-0">
+        <HeroSection />
+        <AboutSection />
+        <TracksSection />
+        <TimelineSection />
+        <PrizesSection />
+        <SponsorsSection />
+        <OrganisersSection />
+        <FAQsSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </main>
   );
 }
