@@ -1,10 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Metadata } from 'next';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { Megrim } from 'next/font/google';
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
+const megrimFont = Megrim({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-megrim',
 });
 
 export const metadata: Metadata = {
@@ -15,12 +19,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${megrimFont.variable} scroll-smooth`}>
+      <body>{children}</body>
     </html>
   );
 }

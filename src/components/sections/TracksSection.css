@@ -1,0 +1,236 @@
+:root {
+  --speed: 0.3s;
+  --card-height: 474px;
+  --mobile-card-height: 120px;
+  --easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tracks-container {
+  transition: grid-template-columns var(--speed) var(--easing);
+  height: var(--card-height) !important;
+}
+
+#tracks-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+#tracks-list li {
+  touch-action: pan-y;
+  height: var(--card-height);
+  will-change: transform, height;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: height var(--speed) var(--easing);
+}
+
+#tracks-list li article {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+@media (hover: none) {
+  #tracks-list li {
+    transition: flex-grow var(--speed) var(--easing);
+  }
+}
+
+#tracks-list li h3 {
+  opacity: 1;
+  transition: all var(--speed) var(--easing);
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-weight: 500;
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  height: calc(100% - 3rem);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 0.75rem;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  z-index: 10;
+  text-transform: uppercase;
+  font-family: "Megrim", system-ui;
+}
+
+#tracks-list li p {
+  opacity: 0;
+  transition: opacity var(--speed) var(--easing);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#tracks-list [data-active='true'] :is(p) {
+  opacity: 1;
+}
+
+#tracks-list [data-active='true'] h3 {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
+  writing-mode: horizontal-tb;
+  transform: none;
+  top: 1rem;
+  left: 1rem;
+  position: absolute;
+  width: calc(100% - 2rem);
+  font-size: 1.25rem;
+  height: auto;
+  padding: 0;
+  text-align: left;
+  font-family: "Megrim", system-ui;
+}
+
+#tracks-list [data-active='true'] p {
+  opacity: 1;
+  transition-delay: calc(var(--speed) * 0.1);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --card-height: var(--mobile-card-height);
+  }
+
+  .tracks-section {
+    min-height: 100vh;
+    padding-top: 4rem;
+    width: 100%;
+  }
+
+  .tracks-container {
+    display: flex !important;
+    flex-direction: column;
+    width: 100% !important;
+    height: auto !important;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    overflow: visible;
+  }
+
+  #tracks-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #tracks-list li {
+    width: 100%;
+    height: var(--mobile-card-height);
+    transform: translateZ(0);
+    will-change: height;
+    transition: height var(--speed) var(--easing);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  #tracks-list li article {
+    width: 100%;
+    position: relative !important;
+    padding: 1rem !important;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between !important;
+    touch-action: pan-y;
+  }
+
+  #tracks-list [data-active='true'] {
+    height: 360px;
+  }
+
+  .description-container {
+    width: 100%;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity var(--speed) var(--easing);
+    touch-action: pan-y;
+  }
+
+  #tracks-list [data-active='true'] .description-container {
+    opacity: 1;
+    transition-delay: calc(var(--speed) * 0.1);
+  }
+
+  #tracks-list li h3.track-title {
+    transform: none !important;
+    position: relative !important;
+    width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    text-align: left;
+    font-size: 1.125rem;
+    white-space: normal;
+    line-height: 1.2;
+    display: block;
+    height: auto;
+    opacity: 1 !important;
+    z-index: 10;
+    font-weight: 500;
+    font-family: "Megrim", system-ui;
+    writing-mode: horizontal-tb;
+  }
+
+  #tracks-list [data-active='true'] h3.track-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 1rem !important;
+    font-family: "Megrim", system-ui;
+  }
+
+  #tracks-list [data-active='true'] p {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    opacity: 1;
+  }
+
+  #tracks-list [data-active='true'] p:last-child {
+    margin-bottom: 0;
+  }
+
+  #tracks-list li img {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --mobile-card-height: 80px;
+  }
+
+  #tracks-list [data-active='true'] {
+    height: 400px;
+  }
+
+  #tracks-list li h3.track-title {
+    font-size: 0.875rem;
+    line-height: 1.2;
+  }
+
+  #tracks-list [data-active='true'] h3.track-title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  .tracks-container {
+    max-height: calc(100vh - 6rem);
+  }
+}
+
+.megrim-regular {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+} 

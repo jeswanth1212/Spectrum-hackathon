@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 const navItems = [
@@ -14,6 +14,18 @@ const navItems = [
   { name: 'Contact Us', href: '#contact' },
 ];
 
+// Throttle function to limit the rate at which a function can fire
+const throttle = <T extends (...args: Parameters<T>) => ReturnType<T>>(func: T, limit: number) => {
+  let inThrottle = false;
+  return ((...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }) as T;
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -23,32 +35,46 @@ export default function Navbar() {
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Use native scroll for maximum performance
+      const top = element.offsetTop - 64; // 64px for navbar height
+      window.scrollTo({
+        top,
+        behavior: 'auto'
+      });
       setIsOpen(false);
+      setActiveSection(targetId);
     }
   };
 
-  useEffect(() => {
-    const handleScrollSpy = () => {
-      const sections = navItems.map(item => item.href.replace('#', ''));
-      
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-    };
+  const handleScrollSpy = useCallback(() => {
+    // Skip scroll spy if menu is open or on mobile
+    if (isOpen || window.innerWidth <= 768) return;
 
-    window.addEventListener('scroll', handleScrollSpy);
-    return () => window.removeEventListener('scroll', handleScrollSpy);
-  }, []);
+    const sections = navItems.map(item => item.href.replace('#', ''));
+    let currentSection = '';
+
+    // Find the current section
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          currentSection = section;
+          break;
+        }
+      }
+    }
+    
+    if (currentSection !== activeSection) {
+      setActiveSection(currentSection);
+    }
+  }, [activeSection, isOpen]);
+
+  useEffect(() => {
+    const throttledScrollSpy = throttle(handleScrollSpy, 200);
+    window.addEventListener('scroll', throttledScrollSpy, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScrollSpy);
+  }, [handleScrollSpy]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm text-white shadow-md">
@@ -175,7 +201,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-purple-900/20 focus:outline-none transition-colors duration-200"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -194,10 +220,10 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <div 
+      <div
         className={`md:hidden fixed inset-x-0 top-16 transform ${
-          isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-        } transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-lg`}
+          isOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-full opacity-0 invisible'
+        } transition-all duration-300 ease-in-out bg-black/90 backdrop-blur-lg z-50`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navItems.map((item) => (
@@ -207,8 +233,8 @@ export default function Navbar() {
               onClick={(e) => handleScroll(e, item.href)}
               className={`block w-full text-left px-4 py-3 rounded-md text-base font-medium transition-colors duration-200 ${
                 activeSection === item.href.replace('#', '') 
-                  ? 'text-purple-400 bg-purple-900/20' 
-                  : 'text-gray-300 hover:bg-purple-900/10 hover:text-purple-300'
+                  ? 'text-white bg-black/40' 
+                  : 'text-gray-300 hover:bg-black/40 hover:text-white'
               }`}
             >
               {item.name}

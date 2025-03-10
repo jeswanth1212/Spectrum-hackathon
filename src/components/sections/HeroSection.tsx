@@ -143,13 +143,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full h-screen bg-black">
-      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-10">
+      <div className="absolute top-24 sm:top-32 left-1/2 transform -translate-x-1/2 z-10">
         <Image 
           src="/logo.png" 
           alt="Spectrum Hackathon Logo"
-          width={420}
-          height={420}
-          className="h-auto w-auto max-h-[420px] max-w-[90vw] object-contain"
+          width={412}
+          height={412}
+          className="h-auto w-auto max-h-[220px] sm:max-h-[300px] max-w-[90vw] object-contain"
         />
       </div>
       <Canvas
@@ -169,9 +169,9 @@ export default function HeroSection() {
         <Scene />
       </Canvas>
 
-      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-8 md:gap-12 w-full px-4">
-        <div className="flex flex-wrap justify-center gap-2 xs:gap-3 sm:gap-4 md:gap-6">
-          <div className="timer-container">
+      <div className="absolute bottom-24 sm:bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-8 md:gap-12 w-full px-4">
+        <div className="flex justify-center gap-2 xs:gap-3 sm:gap-4 md:gap-6 w-full" style={{ maxWidth: '95vw' }}>
+          <div className="timer-container flex-1">
             <div className="a l"></div>
             <div className="a r"></div>
             <div className="a t"></div>
@@ -181,7 +181,7 @@ export default function HeroSection() {
               <div className="text-sm mt-2">DAYS</div>
             </div>
           </div>
-          <div className="timer-container">
+          <div className="timer-container flex-1">
             <div className="a l"></div>
             <div className="a r"></div>
             <div className="a t"></div>
@@ -191,7 +191,7 @@ export default function HeroSection() {
               <div className="text-sm mt-2">HOURS</div>
             </div>
           </div>
-          <div className="timer-container">
+          <div className="timer-container flex-1">
             <div className="a l"></div>
             <div className="a r"></div>
             <div className="a t"></div>
@@ -201,7 +201,7 @@ export default function HeroSection() {
               <div className="text-sm mt-2">MINUTES</div>
             </div>
           </div>
-          <div className="timer-container">
+          <div className="timer-container flex-1">
             <div className="a l"></div>
             <div className="a r"></div>
             <div className="a t"></div>
@@ -257,58 +257,36 @@ export default function HeroSection() {
           .timer-container {
             position: relative;
             background: #111;
-            padding: 0.75rem 1rem;
-            min-width: 80px;
+            aspect-ratio: 1;
+            width: calc(22vw - 0.5rem);
+            max-width: 100px;
+            min-width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            @media (min-width: 480px) {
-              padding: 0.875rem 1.25rem;
-              min-width: 90px;
-            }
-            @media (min-width: 640px) {
-              padding: 1rem 1.5rem;
-              min-width: 100px;
-            }
-            @media (min-width: 768px) {
-              padding: 1.5rem 2rem;
-              min-width: 140px;
-            }
           }
 
           .timer-content {
             position: relative;
             z-index: 1;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
           }
 
           .timer-content .text-5xl {
-            font-size: 1.5rem;
-            line-height: 1.2;
-            @media (min-width: 480px) {
-              font-size: 1.75rem;
-            }
-            @media (min-width: 640px) {
-              font-size: 2rem;
-            }
-            @media (min-width: 768px) {
-              font-size: 3rem;
-            }
+            font-size: clamp(1.25rem, 3.5vw, 2.25rem);
+            line-height: 1;
           }
 
           .timer-content .text-sm {
-            font-size: 0.625rem;
+            font-size: clamp(0.5rem, 1.25vw, 0.75rem);
             margin-top: 0.25rem;
-            @media (min-width: 480px) {
-              font-size: 0.675rem;
-              margin-top: 0.375rem;
-            }
-            @media (min-width: 640px) {
-              font-size: 0.75rem;
-              margin-top: 0.5rem;
-            }
-            @media (min-width: 768px) {
-              font-size: 0.875rem;
-              margin-top: 0.5rem;
-            }
           }
 
           .text {
