@@ -8,6 +8,7 @@
     position: relative;
     overflow: hidden;
     transition: transform 0.3s, background 0.3s;
+    
   }
   
   .box:hover {
