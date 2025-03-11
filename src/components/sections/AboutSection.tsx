@@ -428,13 +428,13 @@ const AboutSection: React.FC = () => {
             </div>
             
             <h2 className="text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              About <span className="font-extrabold">NeuroScan</span>
+              About <span className="font-extrabold">SPECTRUM</span>
             </h2>
             
             <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-8"></div>
             
             <p className="text-gray-300 text-xl text-center max-w-3xl mx-auto leading-relaxed">
-              Revolutionizing autism screening through AI-driven multimodal analysis and accessible technology.
+              SPECTRUM isn't just a hackathon—it's a 24-hour innovation battlefield where technology meets entrepreneurship, and bold ideas become game-changing solutions.
             </p>
           </div>
           
@@ -447,10 +447,10 @@ const AboutSection: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </span>
-                  The Innovation
+                  The Event
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
-                  NeuroScan integrates computer vision, natural language processing, large language models, and biometric tracking to create an objective and scalable autism detection system, addressing the limitations of traditional subjective assessments.
+                  Powered by OSPC x CSED, with Vertex Innovate as our community partner and backing from Blackbox AI, Unstop, and IBM Z, this electrifying event on April 11-12 is built to ignite disruptors.
                 </p>
               </div>
               
@@ -464,7 +464,7 @@ const AboutSection: React.FC = () => {
                   Our Approach
                 </h3>
                 <p className="text-gray-300 leading-relaxed">
-                  The three-tiered methodology combines facial and eye-tracking analysis, speech pattern recognition, and interactive MCQ-based evaluation to enhance diagnostic accuracy through multimodal data sources.
+                  With high-impact tracks, SPECTRUM pushes participants to think like founders, build scalable solutions, and create real-world impact. But it's more than problem-solving—we're redefining hackathons with music, flash mobs, and immersive experiences.
                 </p>
               </div>
             </div>
@@ -483,15 +483,15 @@ const AboutSection: React.FC = () => {
                   </svg>
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-3">Facial & Eye Tracking</h3>
+                <h3 className="text-xl font-bold text-white mb-3">Innovation Battlefield</h3>
                 
                 <p className="text-gray-300 mb-6 flex-grow">
-                  Advanced computer vision algorithms analyze micro-expressions and eye movement patterns to identify key neurological indicators associated with autism spectrum disorders.
+                  SPECTRUM brings together technology and entrepreneurship in a 24-hour innovation battlefield where bold ideas transform into game-changing solutions.
                 </p>
                 
                 <div className="flex justify-end">
-                <a href="http://localhost:8504/" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
-                  Start Test
+                <a href="#" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
+                  Learn More
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -511,15 +511,15 @@ const AboutSection: React.FC = () => {
                   </svg>
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-3">Speech Analysis</h3>
+                <h3 className="text-xl font-bold text-white mb-3">Powerful Partnerships</h3>
                 
                 <p className="text-gray-300 mb-6 flex-grow">
-                  Sophisticated NLP techniques and linguistic pattern recognition identify subtle speech characteristics, prosody variations, and communication patterns indicative of autism.
+                  Backed by OSPC x CSED, Vertex Innovate, Blackbox AI, Unstop, and IBM Z, SPECTRUM brings together industry leaders to support the next generation of innovators.
                 </p>
                 
                 <div className="flex justify-end">
-                <a href="http://localhost:8503/" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
-                  Start Test
+                <a href="#" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
+                  Our Partners
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -539,15 +539,15 @@ const AboutSection: React.FC = () => {
                   </svg>
                 </div>
                 
-                <h3 className="text-xl font-bold text-white mb-3">Interactive Assessment</h3>
+                <h3 className="text-xl font-bold text-white mb-3">IBM Z Speaker Session</h3>
                 
                 <p className="text-gray-300 mb-6 flex-grow">
-                  AI-powered evaluations use engaging activities and questionnaires to assess cognitive patterns, social responsiveness, and behavioral indicators relevant to autism spectrum diagnosis.
+                  IBM Z adds to the thrill with an exclusive speaker session, delivering expert insights, cutting-edge trends, and guidance to fuel your entrepreneurial journey.
                 </p>
                 
                 <div className="flex justify-end">
-                <a href="http://localhost:8502/" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
-                  Start Test
+                <a href="#" className="text-blue-400 flex items-center text-sm font-medium group-hover:text-blue-300 transition-colors">
+                  Session Details
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -557,7 +557,18 @@ const AboutSection: React.FC = () => {
             </div>
           </div>
           
-          {/* Start Button */}
+          {/* Call to Action Button */}
+          <div className="flex justify-center mt-16">
+            <a href="#" className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-bold rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="relative flex items-center">
+                Get Ready to Build, Disrupt, and Celebrate Innovation
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+            </a>
+          </div>
           
         </div>
       </div>
