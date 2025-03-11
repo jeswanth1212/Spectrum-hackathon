@@ -5,10 +5,10 @@ import TracksSection from '@/components/sections/TracksSection';
 import TimelineSection from '@/components/sections/TimelineSection';
 import PrizesSection from '@/components/sections/PrizesSection';
 import SponsorsSection from '@/components/sections/SponsorsSection';
-import OrganisersSection from '@/components/sections/OrganisersSection';
 import FAQsSection from '@/components/sections/FAQsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
+import Organizers from '@/components/sections/OrganisersSection';
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
         <TimelineSection />
         <PrizesSection />
         <SponsorsSection />
-        <OrganisersSection />
+        <Organizers />
         <FAQsSection />
         <ContactSection />
         <Footer />
