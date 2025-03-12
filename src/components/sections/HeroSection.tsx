@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useCallback, useEffect, Suspense } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Bloom, EffectComposer, LUT } from '@react-three/postprocessing';
@@ -13,6 +13,16 @@ import { calculateRefractionAngle } from '../hero3d/utils';
 import { RayEvent, RayMoveEvent } from '../hero3d/types';
 import { ReflectRef } from '../hero3d/Beam';
 import Image from 'next/image';
+
+function Effects() {
+  const texture = useLoader(LUTCubeLoader, '/lut/F-6800-STD.cube') as THREE.DataTexture;
+  return (
+    <EffectComposer>
+      <Bloom mipmapBlur levels={9} intensity={0.8} luminanceThreshold={0.5} luminanceSmoothing={0.9} />
+      <LUT lut={texture} />
+    </EffectComposer>
+  );
+}
 
 function Scene() {
   const flare = useRef<THREE.Group>(null);
@@ -76,8 +86,6 @@ function Scene() {
     ambient.current.intensity = 0.4;
   });
 
-  const texture = useLoader(LUTCubeLoader, '/lut/F-6800-STD.cube') as THREE.DataTexture;
-
   return (
     <>
       <ambientLight ref={ambient} intensity={0.4} />
@@ -102,10 +110,9 @@ function Scene() {
       <Rainbow ref={rainbow} startRadius={0} endRadius={0.5} fade={0} position={[0, 0.15, 0]} />
       <Flare ref={flare} visible={true} scale={1.5} streak={[15, 25, 1]} />
       
-      <EffectComposer>
-        <Bloom mipmapBlur levels={9} intensity={0.8} luminanceThreshold={0.5} luminanceSmoothing={0.9} />
-        <LUT lut={texture} />
-      </EffectComposer>
+      <Suspense fallback={null}>
+        <Effects />
+      </Suspense>
     </>
   );
 }
@@ -221,7 +228,13 @@ export default function HeroSection() {
       </div>
       <Canvas
         orthographic
-        gl={{ antialias: false }}
+        gl={{ 
+          antialias: false,
+          alpha: false,
+          stencil: false,
+          depth: true,
+          powerPreference: "high-performance"
+        }}
         camera={{ position: [0, 0, 100], zoom: 70 }}
         style={{
           position: 'absolute',
