@@ -46,14 +46,15 @@ function Scene() {
     
     const angleScreenCenter = Math.atan2(-position.y, -position.x);
     const incidentAngle = Math.acos(direction.dot(normal));
-    const refractionAngle = calculateRefractionAngle(incidentAngle, 2.4);
+    const baseRefractionAngle = calculateRefractionAngle(incidentAngle, 2.4);
+    const tiltedAngle = baseRefractionAngle + Math.PI * 0.1;
     
-    rainbow.current.rotation.z = angleScreenCenter + refractionAngle;
+    rainbow.current.rotation.z = angleScreenCenter + tiltedAngle;
     
     if (spot.current.target instanceof THREE.Object3D) {
       spot.current.target.position.set(
-        Math.cos(angleScreenCenter + refractionAngle),
-        Math.sin(angleScreenCenter + refractionAngle),
+        Math.cos(angleScreenCenter + tiltedAngle) * 1.2,
+        Math.sin(angleScreenCenter + tiltedAngle) * 1.2,
         0
       );
       spot.current.target.updateMatrixWorld();
@@ -66,7 +67,7 @@ function Scene() {
     const x = state.pointer.x * state.viewport.width / 2;
     const y = state.pointer.y * state.viewport.height / 2;
     
-    boxreflect.current.setRay([x, y, 0], [0, 0, 0]);
+    boxreflect.current.setRay([x, y, 0], [0, 0.15, 0]);
     
     if (rainbow.current.material.uniforms) {
       rainbow.current.material.uniforms.emissiveIntensity.value = 4;
@@ -89,16 +90,16 @@ function Scene() {
         distance={25} 
         angle={0.5} 
         penumbra={0.5} 
-        position={[0, 0, 1]}
+        position={[0, 0.15, 1]}
       >
-        <object3D position={[0, 0, 0]} />
+        <object3D position={[0, 0.15, 0]} />
       </spotLight>
       
       <Beam ref={boxreflect} bounce={10} far={20}>
-        <Prism position={[0, -0.25, 0]} onRayOver={rayOver} onRayOut={rayOut} onRayMove={rayMove} />
+        <Prism position={[0, 0.15, 0]} onRayOver={rayOver} onRayOut={rayOut} onRayMove={rayMove} />
       </Beam>
       
-      <Rainbow ref={rainbow} startRadius={0} endRadius={0.5} fade={0} />
+      <Rainbow ref={rainbow} startRadius={0} endRadius={0.5} fade={0} position={[0, 0.15, 0]} />
       <Flare ref={flare} visible={true} scale={1.5} streak={[15, 25, 1]} />
       
       <EffectComposer>
@@ -110,46 +111,112 @@ function Scene() {
 }
 
 export default function HeroSection() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
+  // Static initial values - these will be updated directly in the DOM
+  const [timeLeft, setTimeLeft] = React.useState({
+    days: 26,
+    hours: 8,
     minutes: 0,
     seconds: 0
   });
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const targetDate = new Date('2024-04-11T00:00:00+05:30');
+  
+  // Use refs to directly access DOM elements
+  const daysRef = React.useRef<HTMLDivElement>(null);
+  const hoursRef = React.useRef<HTMLDivElement>(null);
+  const minutesRef = React.useRef<HTMLDivElement>(null);
+  const secondsRef = React.useRef<HTMLDivElement>(null);
+  
+  // Client-side countdown logic with direct DOM updates
+  React.useEffect(() => {
+    // Skip this in SSR
+    if (typeof window === 'undefined') return;
+    
+    console.log("Imperative countdown initialized");
+    
+    // Target date - April 11, 2025 at 10:00 AM IST
+    // Calculating in IST (UTC+5:30)
+    const istOffsetHours = 5;
+    const istOffsetMinutes = 30;
+    
+    // Set date using UTC methods to handle timezone accurately
+    const targetTime = new Date();
+    targetTime.setUTCFullYear(2025);
+    targetTime.setUTCMonth(3); // April (0-indexed)
+    targetTime.setUTCDate(11);
+    targetTime.setUTCHours(10 - istOffsetHours); // 10 AM IST = 4:30 AM UTC
+    targetTime.setUTCMinutes(0 - istOffsetMinutes);
+    targetTime.setUTCSeconds(0);
+    targetTime.setUTCMilliseconds(0);
+    
+    console.log("Target date (UTC):", targetTime.toUTCString());
+    console.log("Target date (local):", targetTime.toString());
+    
+    // Current date for debugging
+    const now = new Date();
+    console.log("Current date (UTC):", now.toUTCString());
+    console.log("Current date (local):", now.toString());
+    console.log("Time difference (days):", Math.floor((targetTime.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+    
+    function updateCountdown() {
       const now = new Date();
-      const nowIST = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-      const difference = targetDate.getTime() - nowIST.getTime();
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      const diff = targetTime.getTime() - now.getTime();
+      
+      // Log values every 10 seconds for debugging
+      if (Math.floor(now.getSeconds() / 10) === 0) {
+        console.log("Time diff (ms):", diff);
       }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
+      
+      if (diff <= 0) {
+        // If past the target date, set all to 0
+        if (daysRef.current) daysRef.current.textContent = "0";
+        if (hoursRef.current) hoursRef.current.textContent = "0";
+        if (minutesRef.current) minutesRef.current.textContent = "0";
+        if (secondsRef.current) secondsRef.current.textContent = "0";
+        return;
+      }
+      
+      // Calculate time units
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      // Update DOM elements directly if they exist
+      if (daysRef.current) {
+        daysRef.current.textContent = days.toString();
+        console.log("Updated days:", days);
+      }
+      if (hoursRef.current) {
+        hoursRef.current.textContent = hours.toString();
+      }
+      if (minutesRef.current) {
+        minutesRef.current.textContent = minutes.toString();
+      }
+      if (secondsRef.current) {
+        secondsRef.current.textContent = seconds.toString();
+      }
+      
+      // Also update React state as a backup
+      setTimeLeft({ days, hours, minutes, seconds });
+    }
+    
+    // Update immediately
+    updateCountdown();
+    
+    // Set interval for updates
+    const interval = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative w-full h-screen bg-black">
-      <div className="absolute top-24 sm:top-32 left-1/2 transform -translate-x-1/2 z-10">
+    <section className="relative w-full h-screen bg-black overflow-hidden">
+      <div className="absolute top-8 sm:top-6 md:top-2 left-1/2 transform -translate-x-1/2 z-10">
         <Image 
           src="/logo.png" 
           alt="Spectrum Hackathon Logo"
           width={412}
           height={412}
-          className="h-auto w-auto max-h-[220px] sm:max-h-[300px] max-w-[90vw] object-contain"
+          className="h-auto w-auto max-h-[180px] sm:max-h-[220px] md:max-h-[220px] max-w-[90vw] object-contain"
         />
       </div>
       <Canvas
@@ -169,15 +236,15 @@ export default function HeroSection() {
         <Scene />
       </Canvas>
 
-      <div className="absolute bottom-24 sm:bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-8 md:gap-12 w-full px-4">
-        <div className="flex justify-center gap-2 xs:gap-3 sm:gap-4 md:gap-6 w-full" style={{ maxWidth: '95vw' }}>
+      <div className="absolute bottom-24 sm:bottom-16 md:bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 sm:gap-6 md:gap-3 w-full px-4">
+        <div className="flex justify-center gap-2 xs:gap-3 sm:gap-4 md:gap-6 w-full" style={{ maxWidth: 'min(85vw, 800px)' }}>
           <div className="timer-container flex-1">
             <div className="a l"></div>
             <div className="a r"></div>
             <div className="a t"></div>
             <div className="a b"></div>
             <div className="timer-content">
-              <div className="text-5xl font-bold">{timeLeft.days}</div>
+              <div ref={daysRef} className="text-5xl font-bold">{timeLeft.days}</div>
               <div className="text-sm mt-2">DAYS</div>
             </div>
           </div>
@@ -187,7 +254,7 @@ export default function HeroSection() {
             <div className="a t"></div>
             <div className="a b"></div>
             <div className="timer-content">
-              <div className="text-5xl font-bold">{timeLeft.hours}</div>
+              <div ref={hoursRef} className="text-5xl font-bold">{timeLeft.hours}</div>
               <div className="text-sm mt-2">HOURS</div>
             </div>
           </div>
@@ -197,7 +264,7 @@ export default function HeroSection() {
             <div className="a t"></div>
             <div className="a b"></div>
             <div className="timer-content">
-              <div className="text-5xl font-bold">{timeLeft.minutes}</div>
+              <div ref={minutesRef} className="text-5xl font-bold">{timeLeft.minutes}</div>
               <div className="text-sm mt-2">MINUTES</div>
             </div>
           </div>
@@ -207,7 +274,7 @@ export default function HeroSection() {
             <div className="a t"></div>
             <div className="a b"></div>
             <div className="timer-content">
-              <div className="text-5xl font-bold">{timeLeft.seconds}</div>
+              <div ref={secondsRef} className="text-5xl font-bold">{timeLeft.seconds}</div>
               <div className="text-sm mt-2">SECONDS</div>
             </div>
           </div>
@@ -237,30 +304,30 @@ export default function HeroSection() {
             position: relative;
             cursor: pointer;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1.25rem;
             background: #111;
             color: #fff;
-            min-width: 160px;
+            min-width: 140px;
             font-size: 0.875rem;
             @media (min-width: 640px) {
+              padding: 0.625rem 1.75rem;
+              min-width: 160px;
+              font-size: 0.875rem;
+            }
+            @media (min-width: 768px) {
               padding: 0.75rem 2rem;
               min-width: 180px;
               font-size: 0.9rem;
-            }
-            @media (min-width: 768px) {
-              padding: 0.875rem 2.5rem;
-              min-width: 200px;
-              font-size: 1rem;
             }
           }
 
           .timer-container {
             position: relative;
             background: #111;
-            aspect-ratio: 1;
-            width: calc(22vw - 0.5rem);
-            max-width: 100px;
-            min-width: 60px;
+            aspect-ratio: 1.2;
+            width: calc(20vw - 0.5rem);
+            max-width: 85px;
+            min-width: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -280,12 +347,13 @@ export default function HeroSection() {
           }
 
           .timer-content .text-5xl {
-            font-size: clamp(1.25rem, 3.5vw, 2.25rem);
+            font-size: clamp(1rem, 3vw, 2rem);
             line-height: 1;
+            font-weight: 500;
           }
 
           .timer-content .text-sm {
-            font-size: clamp(0.5rem, 1.25vw, 0.75rem);
+            font-size: clamp(0.5rem, 1vw, 0.7rem);
             margin-top: 0.25rem;
           }
 
@@ -382,8 +450,18 @@ export default function HeroSection() {
             right: var(--t);
             height: var(--w);
           }
+
+          @media (min-width: 1024px) {
+            .timer-container {
+              aspect-ratio: 2;
+              max-width: 150px;
+            }
+            .absolute.bottom-24 {
+              bottom: 6rem;
+            }
+          }
         `}</style>
       </div>
     </section>
   );
-} 
+}

@@ -1,6 +1,6 @@
 :root {
   --speed: 0.3s;
-  --card-height: 474px;
+  --card-height: 450px;
   --mobile-card-height: 120px;
   --easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -8,11 +8,13 @@
 .tracks-container {
   transition: grid-template-columns var(--speed) var(--easing);
   height: var(--card-height) !important;
+  padding-bottom: 1rem;
 }
 
 #tracks-list {
   display: grid;
   gap: 0.5rem;
+  height: var(--card-height);
 }
 
 #tracks-list li {
@@ -40,7 +42,7 @@
   opacity: 1;
   transition: all var(--speed) var(--easing);
   color: rgb(255, 255, 255);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0, 0, 0, 0.9);
   font-weight: 500;
   position: absolute;
   top: 1.5rem;
@@ -71,7 +73,7 @@
 }
 
 #tracks-list [data-active='true'] h3 {
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 2px 5px rgba(0, 0, 0, 0.9);
   writing-mode: horizontal-tb;
   transform: none;
   top: 1rem;
@@ -99,6 +101,7 @@
     min-height: 100vh;
     padding-top: 4rem;
     width: 100%;
+    overflow-x: hidden;
   }
 
   .tracks-container {
@@ -109,6 +112,7 @@
     gap: 0.5rem;
     padding: 0 1rem;
     overflow: visible;
+    touch-action: pan-y pinch-zoom;
   }
 
   #tracks-list {
@@ -119,6 +123,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    touch-action: pan-y pinch-zoom;
   }
 
   #tracks-list li {
@@ -129,7 +134,8 @@
     transition: height var(--speed) var(--easing);
     border-radius: 0.5rem;
     overflow: hidden;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
   }
 
   #tracks-list li article {
@@ -140,11 +146,7 @@
     flex-direction: column;
     height: 100%;
     justify-content: space-between !important;
-    touch-action: pan-y;
-  }
-
-  #tracks-list [data-active='true'] {
-    height: 360px;
+    touch-action: pan-y pinch-zoom;
   }
 
   .description-container {
@@ -152,11 +154,17 @@
     opacity: 0;
     will-change: opacity;
     transition: opacity var(--speed) var(--easing);
-    touch-action: pan-y;
+    pointer-events: none;
+  }
+
+  #tracks-list [data-active='true'] {
+    height: 360px;
+    touch-action: pan-y pinch-zoom;
   }
 
   #tracks-list [data-active='true'] .description-container {
     opacity: 1;
+    pointer-events: auto;
     transition-delay: calc(var(--speed) * 0.1);
   }
 

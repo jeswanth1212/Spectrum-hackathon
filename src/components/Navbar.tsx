@@ -8,8 +8,8 @@ const navItems = [
   { name: 'Tracks', href: '#tracks' },
   { name: 'Timeline', href: '#timeline' },
   { name: 'Prizes', href: '#prizes' },
-  { name: 'Sponsors', href: '#sponsors' },
   { name: 'Organisers', href: '#organisers' },
+  { name: 'Sponsors', href: '#sponsors' },
   { name: 'FAQs', href: '#faqs' },
   { name: 'Contact Us', href: '#contact' },
 ];
@@ -77,7 +77,7 @@ export default function Navbar() {
   }, [handleScrollSpy]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm text-white shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-[2px] text-white shadow-md">
       <style jsx>{`
         .nav-link {
           position: relative;

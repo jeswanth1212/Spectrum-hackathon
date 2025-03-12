@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Megrim } from 'next/font/google';
 import "./globals.css";
+import ClientWrapper from '@/components/ClientWrapper'
 
 const megrimFont = Megrim({
   weight: '400',
@@ -23,8 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${megrimFont.variable} scroll-smooth`}>
-      <body>{children}</body>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${megrimFont.variable} scroll-smooth`} suppressHydrationWarning>
+      <body>
+        <ClientWrapper>
+          {children}
+        </ClientWrapper>
+      </body>
     </html>
   );
 }

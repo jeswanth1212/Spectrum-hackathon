@@ -30,3 +30,17 @@
     to { transform: translateY(100px); }
   }
   
+  @media (max-width: 640px) {
+    .raindrop {
+        animation-duration: 3s !important;
+    }
+    
+    .box {
+        transition: transform 0.5s, background 0.5s;
+    }
+    
+    .box:hover {
+        transform: scale(1.02);
+    }
+  }
+  

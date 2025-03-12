@@ -35,6 +35,17 @@
   to { box-shadow: 0 0 20px white; }
 }
 
+@media (max-width: 640px) {
+  @keyframes glow {
+    from { box-shadow: 0 0 5px white; }
+    to { box-shadow: 0 0 10px white; }
+  }
+  
+  .timeline::before {
+    animation: glow 4s infinite alternate;
+  }
+}
+
 .timelineItem {
   position: relative;
   width: 50%;
@@ -68,4 +79,11 @@
 @keyframes pulse {
   from { box-shadow: 0 0 10px white; }
   to { box-shadow: 0 0 20px white; }
+}
+
+@media (max-width: 640px) {
+  @keyframes pulse {
+    from { box-shadow: 0 0 5px white; }
+    to { box-shadow: 0 0 10px white; }
+  }
 }

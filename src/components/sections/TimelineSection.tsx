@@ -20,7 +20,6 @@ export default function TimelineSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2>TIMELINE</h2>
         <div className={styles.container}>
-      <h1 className={styles.heading}>Spectrum Hackathon Timeline</h1>
       <div className={styles.timeline}>
         {events.map((event, index) => (
           <div

@@ -13,14 +13,17 @@ const RainEffectBox: React.FC<Props> = ({ title, time }) => {
       const raindrop = document.createElement("div");
       raindrop.className = styles.raindrop;
       raindrop.style.left = `${Math.random() * 100}%`;
-      raindrop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+      raindrop.style.animationDuration = `${Math.random() * 2 + (window.innerWidth <= 640 ? 2 : 1)}s`;
       container.appendChild(raindrop);
-      setTimeout(() => raindrop.remove(), 3000);
+      setTimeout(() => raindrop.remove(), window.innerWidth <= 640 ? 4000 : 3000);
     };
 
     const container = document.getElementById(`rain-${title}`);
     if (container) {
-      const interval = setInterval(() => createRaindrop(container), 200);
+      const interval = setInterval(
+        () => createRaindrop(container), 
+        window.innerWidth <= 640 ? 500 : 200
+      );
       return () => clearInterval(interval);
     }
   }, [title]);
