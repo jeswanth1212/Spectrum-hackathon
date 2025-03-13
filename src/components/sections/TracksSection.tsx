@@ -64,7 +64,8 @@ export default function TracksSection() {
   return (
     <section id="tracks" className="tracks-section bg-black text-white py-16">
       <div className="w-full">
-        <h2 className="mb-8 md:mb-16">TRACKS</h2>
+        <h2 className="text-center font-['Megrim'] text-white" style={{ fontSize: "4.5rem" }}>TRACKS</h2>
+        <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-blue-500 mx-auto mb-16" style={{ marginTop: "-1.5rem" }}></div>
         <div className="tracks-container mx-auto px-4">
           <ul
             id="tracks-list"

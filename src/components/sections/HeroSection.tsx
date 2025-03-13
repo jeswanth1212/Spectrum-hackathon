@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback, useEffect, Suspense } from 'react';
+import React, { useRef, useCallback, Suspense } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Bloom, EffectComposer, LUT } from '@react-three/postprocessing';
@@ -221,9 +221,9 @@ export default function HeroSection() {
         <Image 
           src="/logo.png" 
           alt="Spectrum Hackathon Logo"
-          width={412}
-          height={412}
-          className="h-auto w-auto max-h-[180px] sm:max-h-[220px] md:max-h-[220px] max-w-[90vw] object-contain"
+          width={512}
+          height={512}
+          className="h-auto w-auto max-h-[220px] sm:max-h-[280px] md:max-h-[320px] max-w-[90vw] object-contain"
         />
       </div>
       <Canvas

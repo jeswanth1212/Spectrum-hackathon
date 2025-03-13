@@ -18,7 +18,8 @@ export default function TimelineSection() {
   return (
     <section id="timeline" className="min-h-screen pt-8 pb-16 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2>TIMELINE</h2>
+        <h2 className="text-center font-['Megrim'] text-white" style={{ fontSize: "4.3rem" }}>TIMELINE</h2>
+        <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-blue-500 mx-auto mb-8" style={{ marginTop: "-1.5rem" }}></div>
         <div className={styles.container}>
       <div className={styles.timeline}>
         {events.map((event, index) => (

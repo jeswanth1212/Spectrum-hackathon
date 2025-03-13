@@ -10,9 +10,8 @@ export default function PrizesSection() {
       </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <h2 className="text-3xl md:text-5xl font-bold mb-4 sm:mb-6 text-center text-white">
-          EXPECT BIG PRIZES
-        </h2>
+        <h2 className="text-center font-['Megrim'] text-white" style={{ fontSize: "4.3rem" }}>EXPECT BIG PRIZES</h2>
+        <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-blue-500 mx-auto mb-8" style={{ marginTop: "-1.5rem" }}></div>
         
         <p className="text-center text-gray-400 text-base sm:text-lg mb-6 sm:mb-10 max-w-2xl mx-auto">
           Get ready for an incredible prize pool! Our sponsors are preparing something extraordinary for the most innovative and impactful projects.

@@ -44,7 +44,8 @@ export default function FAQsSection() {
   return (
     <section id="faqs" className="min-h-screen pt-8 pb-16 bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center mb-12">FAQS</h2>
+        <h2 className="text-center font-['Megrim'] text-white" style={{ fontSize: "4.3rem" }}>FAQs</h2>
+        <div className="h-1 w-24 bg-gradient-to-r from-purple-400 to-blue-500 mx-auto mb-8" style={{ marginTop: "-1.5rem" }}></div>
         <div className="flex flex-col gap-4 md:gap-6 max-w-4xl mx-auto">
           {faqs.map((faq, index) => (
             <div
